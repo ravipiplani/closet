@@ -1,3 +1,4 @@
+import 'package:closet/components/decorated_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -17,20 +18,9 @@ class HomeButton extends StatelessWidget {
       child: InkWell(
         onTap: this.handler,
         splashColor: Theme.of(context).primaryColor.withOpacity(0.2),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(
-                width: 1,
-                color: whiteTheme ? Colors.white24 : Theme.of(context).primaryColor.withOpacity(0.2)
-              ),
-              left: leftBorder ? BorderSide(
-                width: 1,
-                color: whiteTheme ? Colors.white24 : Theme.of(context).primaryColor.withOpacity(0.2)
-              ) : BorderSide(width: 0)
-            ),
-            color: Colors.transparent,
-          ),
+        child: DecoratedContainer(
+          borderTop: true,
+          borderLeft: leftBorder,
           padding: EdgeInsets.symmetric(vertical: 26),
           child: buildButton(context)
         )

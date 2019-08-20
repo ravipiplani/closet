@@ -1,3 +1,4 @@
+import 'package:closet/components/decorated_container.dart';
 import 'package:flutter/material.dart';
 
 class SocialButton extends StatelessWidget {
@@ -16,20 +17,9 @@ class SocialButton extends StatelessWidget {
           onTap: () {
             print('click');
           },
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  width: 1,
-                  color: Color(0xff1e3b65).withOpacity(0.2)
-                ),
-                right: BorderSide(
-                  width: 1,
-                  color: Color(0xff1e3b65).withOpacity(0.2)
-                )
-              ),
-              color: Colors.transparent
-            ),
+          child: DecoratedContainer(
+            borderTop: true,
+            borderRight: true,
             padding: EdgeInsets.symmetric(vertical: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

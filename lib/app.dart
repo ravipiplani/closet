@@ -65,7 +65,7 @@ class _AppRootWidgetState extends State<AppRootWidget> {
     return new MaterialApp(
       title: 'Closet',
       theme: _themeData,
-      initialRoute: '/',
+      initialRoute: 'home',
       routes: {
         '/': (BuildContext context) => Walkthrough(),
         'auth': (BuildContext context) => Auth(),

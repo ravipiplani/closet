@@ -1,14 +1,15 @@
 import 'package:closet/components/auth/home_button.dart';
 import 'package:closet/components/logo.dart';
-import 'package:closet/components/master.dart';
+import 'package:closet/components/decorated_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Mobile extends StatelessWidget {
+  final TextEditingController _textFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Master(
+    return DecoratedContainer(
       child :Container(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -42,9 +43,39 @@ class Mobile extends StatelessWidget {
               ),
             ),
             HomeButton(
-              text: 'Verify Now',
+              text: 'Get OTP',
               handler: () {
-                Navigator.of(context).pushNamed('home');
+                return showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      elevation: 0,
+                      backgroundColor: Colors.white,
+                      title: Text('Enter OTP'),
+                      content: TextField(
+                        controller: _textFieldController,
+                        decoration: InputDecoration(
+                          helperText: "Enter OTP to verify mobile number!",
+                          hintText: 'OTP'
+                        ),
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: new Text('VERIFY'),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('home');
+                          },
+                        ),
+                        FlatButton(
+                          child: new Text('CANCEL'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        )
+                      ],
+                    );
+                  }
+                );
               }
             )
           ],

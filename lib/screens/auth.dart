@@ -1,7 +1,7 @@
 import 'package:closet/components/auth/home_button.dart';
 import 'package:closet/components/auth/social_button.dart';
 import 'package:closet/components/logo.dart';
-import 'package:closet/components/master.dart';
+import 'package:closet/components/decorated_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,7 +13,7 @@ class Auth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Master(
+    return DecoratedContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -25,7 +25,7 @@ class Auth extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     SocialButton('Connect with Facebook', FontAwesomeIcons.facebookF),
-                    SocialButton('Connect with Twitter', FontAwesomeIcons.twitter)
+                    SocialButton('Connect with Google', FontAwesomeIcons.google)
                   ],
                 ),
                 HomeButton(
