@@ -13,29 +13,32 @@ class Auth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedContainer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Logo(position: 200),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    SocialButton('Connect with Facebook', FontAwesomeIcons.facebookF),
-                    SocialButton('Connect with Google', FontAwesomeIcons.google)
-                  ],
-                ),
-                HomeButton(
-                  text: 'or use your mobile number', 
-                  handler: () {_navigate(context, 'mobile');})
-              ]
+    return Scaffold(
+      body: DecoratedContainer(
+        showImage: false,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Logo(position: 200),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      SocialButton('Connect with Facebook', FontAwesomeIcons.facebookF),
+                      SocialButton('Connect with Google', FontAwesomeIcons.google)
+                    ],
+                  ),
+                  HomeButton(
+                    text: 'or use your mobile number', 
+                    handler: () {_navigate(context, 'mobile');})
+                ]
+              )
             )
-          )
-        ]
-      )
+          ]
+        )
+      ),
     );
   }
 }

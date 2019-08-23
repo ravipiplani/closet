@@ -1,4 +1,5 @@
 import 'package:closet/components/auth/home_button.dart';
+import 'package:closet/components/decorated_container.dart';
 import 'package:closet/components/logo.dart';
 import 'package:flutter/material.dart';
 
@@ -29,18 +30,9 @@ class _WalkthroughState extends State<Walkthrough> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            stops: [0, 1],
-            colors: [
-              const Color(0xFF21D0FD),
-              const Color(0xFFEE4DB9)
-            ],
-          )
-        ),
+      body: DecoratedContainer(
+        showGradient: true,
+        showImage: false,
         child: Column(
           children: <Widget>[
             Flexible(
@@ -65,7 +57,6 @@ class _WalkthroughState extends State<Walkthrough> {
                   Expanded(
                     child: HomeButton(
                       text: 'Back',
-                      whiteTheme: true,
                       icon: false,
                       handler: () {
                         _controller.previousPage(duration: _kDuration, curve: _kCurve);
@@ -75,7 +66,6 @@ class _WalkthroughState extends State<Walkthrough> {
                   Expanded(
                     child: HomeButton(
                       text: 'Next',
-                      whiteTheme: true,
                       icon: false,
                       leftBorder: true,
                       handler: () {
@@ -107,14 +97,14 @@ class _WalkthroughState extends State<Walkthrough> {
           ),
           Container(
             margin: EdgeInsets.only(top: 80),
-            child: Icon(icon, size: 200, color: Colors.white54,),
+            child: Icon(icon, size: 160, color: Theme.of(context).primaryColor.withOpacity(0.8),),
           ),
           Container(
-            margin: EdgeInsets.only(top: 20),
+            margin: EdgeInsets.only(top: 40),
             padding: EdgeInsets.symmetric(horizontal: 32),
             child: Text(
               title,
-              style: Theme.of(context).textTheme.display2.copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.display2.copyWith(color: Theme.of(context).accentColor),
               textAlign: TextAlign.center,
             ),
           )

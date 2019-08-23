@@ -1,3 +1,4 @@
+import 'package:closet/components/camera.dart';
 import 'package:closet/components/customappbar.dart';
 import 'package:closet/components/decorated_container.dart';
 import 'package:closet/components/home/date_selector.dart';
@@ -51,7 +52,7 @@ class _HomeState extends State<Home> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Container(
-                    child: Text('Recent Looks', style: Theme.of(context).textTheme.title.copyWith(color: Colors.white54)),
+                    child: Text('Recent Looks', style: Theme.of(context).textTheme.title),
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
@@ -91,7 +92,7 @@ class _HomeState extends State<Home> {
   Widget singlePost({String date = ''}) {
     Widget dateDisplay;
     if (date == '') {
-      dateDisplay = Text('YESTERDAY', style: TextStyle(color: Colors.white54),);
+      dateDisplay = Text('YESTERDAY', style: Theme.of(context).textTheme.display4);
     }
     else {
       DateTime tempDate = DateTime.parse(date);
@@ -105,8 +106,8 @@ class _HomeState extends State<Home> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Text(DateFormat.MMM().format(tempDate).toUpperCase(), style: TextStyle(fontSize: 14),),
-                Text(tempDate.year.toString(), style: Theme.of(context).textTheme.body1.copyWith(color: Colors.white54),)
+                Text(DateFormat.MMM().format(tempDate).toUpperCase(), style: Theme.of(context).textTheme.body1,),
+                Text(tempDate.year.toString(), style: Theme.of(context).textTheme.display4)
               ],
             ),
           )
@@ -158,7 +159,9 @@ class _HomeState extends State<Home> {
                 child: FlatButton.icon(
                   icon: Icon(Icons.add, color: Theme.of(context).primaryColor,),
                   label: Text('Add Cloth', style: Theme.of(context).textTheme.subhead.copyWith(color: Theme.of(context).primaryColor),),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('new_item');
+                  },
                 ),
               ),
               Container(

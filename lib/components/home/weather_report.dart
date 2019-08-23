@@ -26,11 +26,11 @@ class _WeatherReportState extends State<WeatherReport> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Icon(Icons.wb_sunny, size: 32, color: Colors.white60,),
+                    Icon(Icons.wb_sunny, size: 32, color: Theme.of(context).indicatorColor,),
                     Container(
                       margin: EdgeInsets.only(left: 8),
                       child: Text('36 ${String.fromCharCode(0x00B0)}',
-                        style: TextStyle(fontSize: 60),
+                        style: Theme.of(context).textTheme.headline.copyWith(fontWeight: FontWeight.w200),
                       ),
                     )
                   ],
@@ -39,7 +39,8 @@ class _WeatherReportState extends State<WeatherReport> {
               Container(
                 margin: EdgeInsets.only(top: 20),
                 child: Text('GURGAON',
-                  style: Theme.of(context).textTheme.body1.copyWith(color: Colors.white54),),
+                  style: Theme.of(context).textTheme.display4
+                ),
               )
             ],
           ),

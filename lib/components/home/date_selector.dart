@@ -62,7 +62,7 @@ class _DateSelectorState extends State<DateSelector> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.keyboard_arrow_left, size: 40, color: Colors.white60,),
+                icon: Icon(Icons.keyboard_arrow_left, size: 40, color: Theme.of(context).primaryColor),
                 iconSize: 40,
                 onPressed: _previousDate,
               ),
@@ -73,12 +73,12 @@ class _DateSelectorState extends State<DateSelector> {
                     children: <Widget>[
                       Text(DateFormat.yMMMd().format(this._currentDate),
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.display2.copyWith(color: Colors.white, fontWeight: FontWeight.w200)
+                        style: Theme.of(context).textTheme.display2
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
                         child: Text(DateFormat.EEEE().format(this._currentDate).toUpperCase(),
-                          style: Theme.of(context).textTheme.body1.copyWith(color: Colors.white54)
+                          style: Theme.of(context).textTheme.display4
                         ),
                       )
                     ],
@@ -86,7 +86,7 @@ class _DateSelectorState extends State<DateSelector> {
                 )
               ),
               IconButton(
-                icon: Icon(Icons.keyboard_arrow_right, size: 40, color: Colors.white60,),
+                icon: Icon(Icons.keyboard_arrow_right, size: 40, color: Theme.of(context).primaryColor,),
                 iconSize: 40,
                 onPressed: _nextDate,
               )

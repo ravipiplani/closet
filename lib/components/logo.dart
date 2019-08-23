@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Logo extends StatelessWidget {
@@ -27,7 +28,7 @@ class Logo extends StatelessWidget {
           child: this.showLabel ? Text(
             'CLOSET',
             style: TextStyle(
-              color: Color(0xff1e3b65).withOpacity(0.8),
+              color: Theme.of(context).primaryColor.withOpacity(0.8),
               fontSize: 42,
               fontWeight: FontWeight.w400,
               fontFamily: 'Diavlo'

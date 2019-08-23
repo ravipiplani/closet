@@ -1,4 +1,5 @@
 import 'package:closet/screens/home.dart';
+import 'package:closet/screens/items/new_item.dart';
 import 'package:closet/screens/mobile.dart';
 import 'package:closet/screens/walkthrough.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class _AppRootWidgetState extends State<AppRootWidget> {
     brightness: Brightness.dark,
     primaryColor: Color(primaryColor),
     primaryColorLight: Color(primaryColor).withOpacity(0.9),
+    indicatorColor: Color(primaryColor).withOpacity(0.6),
     accentColor: Color(accentColor),
     scaffoldBackgroundColor: Colors.grey[300],
     // Define the default font family.
@@ -24,15 +26,16 @@ class _AppRootWidgetState extends State<AppRootWidget> {
     // text styling for headlines, titles, bodies of text, and more.
     textTheme: TextTheme(
       display1: TextStyle(fontSize: 42.0, fontWeight: FontWeight.w400, fontFamily: 'Diavlo'),
-      display2: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400),
+      display2: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w200, color: Color(primaryColor)),
       display3: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300),
-      headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+      display4: TextStyle(fontSize: 14.0, color: Color(primaryColor).withOpacity(0.3)),
+      headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold, color: Color(primaryColor)),
       title: TextStyle(fontSize: 24.0, color: Color(accentColor)),
       body2: TextStyle(fontSize: 18.0, color: Color(primaryColor)),
-      body1: TextStyle(fontSize: 14.0),
+      body1: TextStyle(fontSize: 14.0, color: Color(primaryColor)),
       subhead: TextStyle(color: Color(accentColor).withOpacity(0.9))
     ).apply(
-      displayColor: Color(primaryColor)
+      displayColor: Color(primaryColor),
     ),
     inputDecorationTheme: InputDecorationTheme(
       labelStyle: TextStyle(
@@ -65,12 +68,13 @@ class _AppRootWidgetState extends State<AppRootWidget> {
     return new MaterialApp(
       title: 'Closet',
       theme: _themeData,
-      initialRoute: 'home',
+      initialRoute: '/',
       routes: {
         '/': (BuildContext context) => Walkthrough(),
         'auth': (BuildContext context) => Auth(),
         'mobile': (BuildContext context) => Mobile(),
-        'home': (BuildContext context) => Home()
+        'home': (BuildContext context) => Home(),
+        'new_item': (BuildContext context) => NewItem()
       },
     );
   }

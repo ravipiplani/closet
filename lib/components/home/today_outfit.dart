@@ -24,7 +24,8 @@ class _TodayOutfitState extends State<TodayOutfit> {
             Container(
               margin: EdgeInsets.only(top: 20),
               child: Text('WORN TODAY',
-                style: Theme.of(context).textTheme.body1.copyWith(color: Colors.white54),),
+                style: Theme.of(context).textTheme.display4
+              )
             )
           ],
         ),

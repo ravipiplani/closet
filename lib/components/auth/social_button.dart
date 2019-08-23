@@ -18,6 +18,8 @@ class SocialButton extends StatelessWidget {
             print('click');
           },
           child: DecoratedContainer(
+            showGradient: false,
+            showImage: false,
             borderTop: true,
             borderRight: true,
             padding: EdgeInsets.symmetric(vertical: 40),

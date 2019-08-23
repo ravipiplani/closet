@@ -17,8 +17,10 @@ class HomeButton extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: this.handler,
-        splashColor: Theme.of(context).primaryColor.withOpacity(0.2),
+        splashColor: Theme.of(context).primaryColor.withOpacity(0.5),
         child: DecoratedContainer(
+          showGradient: false,
+          showImage: false,
           borderTop: true,
           borderLeft: leftBorder,
           padding: EdgeInsets.symmetric(vertical: 26),
