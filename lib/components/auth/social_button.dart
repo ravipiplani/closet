@@ -13,7 +13,7 @@ class SocialButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          splashColor: Color(0xff1e3b65).withOpacity(0.2),
+          splashColor: Theme.of(context).primaryColor.withOpacity(0.2),
           onTap: () {
             print('click');
           },

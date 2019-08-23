@@ -28,7 +28,7 @@ class _AppRootWidgetState extends State<AppRootWidget> {
       display3: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300),
       headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
       title: TextStyle(fontSize: 24.0, color: Color(accentColor)),
-      body2: TextStyle(fontSize: 18.0),
+      body2: TextStyle(fontSize: 18.0, color: Color(primaryColor)),
       body1: TextStyle(fontSize: 14.0),
       subhead: TextStyle(color: Color(accentColor).withOpacity(0.9))
     ).apply(
@@ -56,7 +56,7 @@ class _AppRootWidgetState extends State<AppRootWidget> {
       ),
     ),
     buttonTheme: ButtonThemeData(
-      splashColor: Theme.of(context).primaryColor.withOpacity(0.2),
+      splashColor: Theme.of(context).primaryColor.withOpacity(0.2)
     ),
   );
 

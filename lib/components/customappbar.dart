@@ -32,8 +32,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               shape: BoxShape.circle,
               image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: NetworkImage(
-                      "https://scontent.fdel1-2.fna.fbcdn.net/v/t1.0-9/44948711_1889594157791030_4634322003610828800_o.jpg?_nc_cat=107&_nc_oc=AQmFoMHisU1XCe4Q2XV-itnctog9jATYMOvModuUhUi69J-z1zojQaG0t_EOQd9gjkE&_nc_ht=scontent.fdel1-2.fna&oh=534fd3c1f560f0636f804dcf6642cf9b&oe=5DCF08C9")
+                  image: AssetImage("assets/images/icon.png")
               )
           )
         )
