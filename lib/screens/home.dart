@@ -1,4 +1,3 @@
-import 'package:closet/components/camera.dart';
 import 'package:closet/components/customappbar.dart';
 import 'package:closet/components/decorated_container.dart';
 import 'package:closet/components/home/date_selector.dart';
@@ -74,14 +73,14 @@ class _HomeState extends State<Home> {
             StadiumBorder(side: BorderSide())
           ),
           notchMargin: 4.0,
-          color: Color(0xFF1D1D26).withOpacity(0.1),
-          elevation: 0,
+          color: Colors.white10,
+          elevation: 1,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              IconButton(icon: Icon(Icons.style,), onPressed: () {},),
-              IconButton(icon: Icon(Icons.whatshot), onPressed: () {},),
+              IconButton(icon: Icon(Icons.style, color: Theme.of(context).primaryColor), onPressed: () {},),
+              IconButton(icon: Icon(Icons.whatshot, color: Theme.of(context).primaryColor), onPressed: () {},),
             ],
           ),
         ),

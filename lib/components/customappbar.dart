@@ -45,7 +45,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       ),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.settings, color: Theme.of(context).primaryColor,),
+          icon: Icon(Icons.settings, color: Colors.white54,),
           onPressed: () {
 
           },

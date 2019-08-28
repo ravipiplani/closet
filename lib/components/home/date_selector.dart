@@ -25,6 +25,7 @@ class _DateSelectorState extends State<DateSelector> {
 
   @override
   Widget build(BuildContext context) {
+    Color primaryColor = Theme.of(context).primaryColor;
     _calendarCarousel = CalendarCarousel(
       height: 280,
       showHeader: false,
@@ -32,13 +33,16 @@ class _DateSelectorState extends State<DateSelector> {
       dayPadding: 0,
       todayButtonColor: Colors.transparent,
       todayBorderColor: Colors.transparent,
-      daysTextStyle: TextStyle(color: Colors.white),
-      weekdayTextStyle: TextStyle(color: Colors.white),
-      weekendTextStyle: TextStyle(color: Colors.white),
-      inactiveDaysTextStyle: TextStyle(color: Colors.white54),
-      inactiveWeekendTextStyle: TextStyle(color: Colors.white54),
-      prevDaysTextStyle: TextStyle(color: Colors.white54),
-      nextDaysTextStyle: TextStyle(color: Colors.white54),
+      todayTextStyle: TextStyle(color: primaryColor),
+      daysTextStyle: TextStyle(color: primaryColor),
+      weekdayTextStyle: TextStyle(color: primaryColor),
+      weekendTextStyle: TextStyle(color: primaryColor),
+      inactiveDaysTextStyle: TextStyle(color: Theme.of(context).indicatorColor),
+      inactiveWeekendTextStyle: TextStyle(color: Theme.of(context).indicatorColor),
+      prevDaysTextStyle: TextStyle(color: Theme.of(context).indicatorColor),
+      nextDaysTextStyle: TextStyle(color: Theme.of(context).indicatorColor),
+      selectedDayBorderColor: primaryColor,
+      selectedDayButtonColor: primaryColor,
       selectedDateTime: _currentDate,
       onDayPressed: (DateTime date, List a) {
         this.setState(() {
@@ -46,8 +50,6 @@ class _DateSelectorState extends State<DateSelector> {
           _showCalendar = false;
         });
       },
-      selectedDayBorderColor: Colors.white,
-      selectedDayButtonColor: Colors.transparent,
     );
 
     return DecoratedContainer(

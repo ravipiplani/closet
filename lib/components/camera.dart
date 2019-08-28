@@ -41,14 +41,16 @@ class _CameraState extends State<Camera> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Column(
+      mainAxisSize: MainAxisSize.max,
+      // mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Center(
           child: showCamera
             ? Stack(
               children: <Widget>[
                 Container(
-                  width: size.width,
-                  height: size.height,
+                  // width: size.width,
+                  height: size.height - 80,
                   color: Colors.transparent,
                   child: cameraPreviewWidget()
                 ),
@@ -60,14 +62,12 @@ class _CameraState extends State<Camera> {
                 )
               ],
             )
-            : Material(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  imagePreviewWidget(),
-                  editCaptureControlRowWidget()
-                ],
-              ),
+            : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                imagePreviewWidget(),
+                editCaptureControlRowWidget()
+              ],
             ),
         )
       ],
@@ -91,6 +91,7 @@ class _CameraState extends State<Camera> {
 
   Widget imagePreviewWidget() {
     return Container(
+      color: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.only(top: 10),
         child: Align(
@@ -161,7 +162,7 @@ class _CameraState extends State<Camera> {
         alignment: Alignment.topCenter,
         child: IconButton(
           icon: const Icon(Icons.camera_alt),
-          color: Colors.blue,
+          color: Theme.of(context).primaryColor,
           onPressed: () => setState(() {
                 showCamera = true;
               }),
