@@ -16,33 +16,34 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       // backgroundColor: Color(0xFF00B9FF).withOpacity(0.7),
       backgroundColor: Theme.of(context).primaryColor,
-      centerTitle: true,
+      // leading: Container(
+      //   padding: EdgeInsets.all(10),
+      //   child: Image(
+      //     image: AssetImage("assets/images/icon.png"),
+      //     color: Theme.of(context).accentColor,
+      //   )
+      // ),
       leading: Container(
-        padding: EdgeInsets.all(10),
-        child: Image(
-          image: AssetImage("assets/images/icon.png"),
-          color: Colors.white,
-        )
-      ),
-      title: Container(
         padding: EdgeInsets.all(10),
         child: Container(
           width: 40.0,
           height: 40.0,
-          // padding: EdgeInsets.all(4),
+          padding: EdgeInsets.all(2),
           decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+            color: Colors.white,
             shape: BoxShape.circle,
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(50.0),
             child: Image(
-              image: AssetImage("assets/images/closeup.jpg"),
+              image: AssetImage("assets/images/icon.png"),
+              color: Theme.of(context).primaryColor,
               fit: BoxFit.scaleDown,
             )
           )
         )
       ),
+      title: Text('Closet', style: Theme.of(context).textTheme.title.copyWith(color: Colors.white, fontFamily: 'Diavlo', fontWeight: FontWeight.w300),),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.settings, color: Colors.white54,),

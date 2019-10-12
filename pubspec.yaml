@@ -57,6 +57,11 @@ flutter:
    - assets/images/icon.png
    - assets/images/logo.png
    - assets/images/closeup.jpg
+   - assets/images/item-type-top.png
+   - assets/images/item-type-bottom.png
+   - assets/images/item-type-accessories.png
+   - assets/images/item-type-footwears.png
+   - assets/images/item-type-lingerie.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -86,6 +91,10 @@ flutter:
           weight: 400
         - asset: assets/fonts/Diavlo_II_37/light.otf
           weight: 300
+    - family: IndieFlower
+      fonts:
+        - asset: assets/fonts/Indie_Flower/IndieFlower-Regular.ttf
+          weight: 400
   
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

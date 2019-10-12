@@ -64,6 +64,7 @@ class _CameraState extends State<Camera> {
             )
             : Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 imagePreviewWidget(),
                 editCaptureControlRowWidget()
@@ -91,18 +92,13 @@ class _CameraState extends State<Camera> {
 
   Widget imagePreviewWidget() {
     return Container(
+      height: 290,
       color: Colors.transparent,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: imagePath == null
-            ? null
-            : SizedBox(
-              child: Image.file(File(imagePath)),
-              height: 290.0,
-            ),
-        ),
+      child: FittedBox(
+        fit: BoxFit.cover,
+        child: imagePath == null
+          ? null
+          : Image.file(File(imagePath)),
       )
     );
   }
@@ -150,6 +146,7 @@ class _CameraState extends State<Camera> {
     try {
       await controller.takePicture(filePath);
     } on CameraException catch (e) {
+      print(e);
       return null;
     }
     return filePath;
@@ -162,7 +159,7 @@ class _CameraState extends State<Camera> {
         alignment: Alignment.topCenter,
         child: IconButton(
           icon: const Icon(Icons.camera_alt),
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).accentColor,
           onPressed: () => setState(() {
                 showCamera = true;
               }),
@@ -233,7 +230,7 @@ class _CameraState extends State<Camera> {
     try {
       await controller.initialize();
     } on CameraException catch (e) {
-      print('Camera error ${e}');
+      print('Camera error $e');
     }
 
     if (mounted) {

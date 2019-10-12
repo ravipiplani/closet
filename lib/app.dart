@@ -19,16 +19,16 @@ class _AppRootWidgetState extends State<AppRootWidget> {
     primaryColorLight: Color(primaryColor).withOpacity(0.9),
     indicatorColor: Color(primaryColor).withOpacity(0.6),
     accentColor: Color(accentColor),
-    scaffoldBackgroundColor: Colors.grey[300],
+    scaffoldBackgroundColor: Colors.white,
     // Define the default font family.
     fontFamily: 'Avenir',
 
     // text styling for headlines, titles, bodies of text, and more.
     textTheme: TextTheme(
       display1: TextStyle(fontSize: 42.0, fontWeight: FontWeight.w400, fontFamily: 'Diavlo'),
-      display2: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w200, color: Color(primaryColor)),
+      display2: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w200, color: Color(primaryColor)),
       display3: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300),
-      display4: TextStyle(fontSize: 14.0, color: Color(primaryColor).withOpacity(0.3)),
+      display4: TextStyle(fontSize: 12.0, color: Color(primaryColor).withOpacity(0.3)),
       headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold, color: Color(primaryColor)),
       title: TextStyle(fontSize: 24.0, color: Color(accentColor)),
       body2: TextStyle(fontSize: 18.0, color: Color(primaryColor)),
@@ -68,13 +68,13 @@ class _AppRootWidgetState extends State<AppRootWidget> {
     return new MaterialApp(
       title: 'Closet',
       theme: _themeData,
-      initialRoute: '/',
+      initialRoute: 'home',
       routes: {
         '/': (BuildContext context) => Walkthrough(),
         'auth': (BuildContext context) => Auth(),
         'mobile': (BuildContext context) => Mobile(),
         'home': (BuildContext context) => Home(),
-        'new_item': (BuildContext context) => NewItem()
+        'new_item': (BuildContext context) => NewItem(),
       },
     );
   }

@@ -8,13 +8,14 @@ class HomeButton extends StatelessWidget {
   final bool icon;
   final bool leftBorder;
   final VoidCallback handler;
+  final Color color;
 
-  HomeButton({this.text, this.whiteTheme = false, this.icon = true, this.leftBorder = false, this.handler});
+  HomeButton({this.text, this.whiteTheme = false, this.icon = true, this.leftBorder = false, this.handler, this.color = Colors.transparent});
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: color,
       child: InkWell(
         onTap: this.handler,
         splashColor: Theme.of(context).primaryColor.withOpacity(0.5),

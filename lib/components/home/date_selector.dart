@@ -53,7 +53,7 @@ class _DateSelectorState extends State<DateSelector> {
     );
 
     return DecoratedContainer(
-      padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+      padding: EdgeInsets.symmetric(vertical: 14, horizontal: 24),
       borderBottom: true,
       showGradient: false,
       showImage: false,
@@ -64,8 +64,8 @@ class _DateSelectorState extends State<DateSelector> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.keyboard_arrow_left, size: 40, color: Theme.of(context).primaryColor),
-                iconSize: 40,
+                icon: Icon(Icons.keyboard_arrow_left, size: 32, color: Theme.of(context).primaryColor),
+                iconSize: 32,
                 onPressed: _previousDate,
               ),
               Expanded(
@@ -88,8 +88,8 @@ class _DateSelectorState extends State<DateSelector> {
                 )
               ),
               IconButton(
-                icon: Icon(Icons.keyboard_arrow_right, size: 40, color: Theme.of(context).primaryColor,),
-                iconSize: 40,
+                icon: Icon(Icons.keyboard_arrow_right, size: 32, color: Theme.of(context).primaryColor,),
+                iconSize: 32,
                 onPressed: _nextDate,
               )
             ],
