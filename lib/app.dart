@@ -1,9 +1,9 @@
-import 'package:closet/screens/home.dart';
-import 'package:closet/screens/items/new_item.dart';
-import 'package:closet/screens/mobile.dart';
-import 'package:closet/screens/walkthrough.dart';
+import 'package:vastram/screens/home.dart';
+import 'package:vastram/screens/items/new_item.dart';
+import 'package:vastram/screens/mobile.dart';
+import 'package:vastram/screens/walkthrough.dart';
 import 'package:flutter/material.dart';
-import 'package:closet/screens/auth.dart';
+import 'package:vastram/screens/auth.dart';
 
 class AppRootWidget extends StatefulWidget {
   @override
@@ -66,7 +66,7 @@ class _AppRootWidgetState extends State<AppRootWidget> {
   @override
   Widget build (BuildContext context) {
     return new MaterialApp(
-      title: 'Closet',
+      title: 'vastram',
       theme: _themeData,
       initialRoute: 'home',
       routes: {

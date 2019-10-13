@@ -1,6 +1,6 @@
-import 'package:closet/components/auth/home_button.dart';
-import 'package:closet/components/decorated_container.dart';
-import 'package:closet/components/logo.dart';
+import 'package:vastram/components/auth/home_button.dart';
+import 'package:vastram/components/decorated_container.dart';
+import 'package:vastram/components/logo.dart';
 import 'package:flutter/material.dart';
 
 class Walkthrough extends StatefulWidget {
@@ -13,7 +13,7 @@ class _WalkthroughState extends State<Walkthrough> {
   List<Map> _walkthroughPages = [
     {
       "icon": Icons.check_box,
-      "title": "Take control of your Closet"
+      "title": "Take control of your vastram"
     },
     {
       "icon": Icons.add_a_photo,

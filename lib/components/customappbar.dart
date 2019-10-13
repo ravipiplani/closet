@@ -43,7 +43,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           )
         )
       ),
-      title: Text('Closet', style: Theme.of(context).textTheme.title.copyWith(color: Colors.white, fontFamily: 'Diavlo', fontWeight: FontWeight.w300),),
+      title: Text('Vastram', style: Theme.of(context).textTheme.title.copyWith(color: Colors.white, fontFamily: 'Diavlo', fontWeight: FontWeight.w300),),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.settings, color: Colors.white54,),

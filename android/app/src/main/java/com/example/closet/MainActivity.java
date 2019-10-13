@@ -1,4 +1,4 @@
-package com.example.closet;
+package com.piplani.vastram;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

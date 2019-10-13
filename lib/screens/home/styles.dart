@@ -1,5 +1,5 @@
-import 'package:closet/components/decorated_container.dart';
-import 'package:closet/screens/items/list_items.dart';
+import 'package:vastram/components/decorated_container.dart';
+import 'package:vastram/screens/items/list_items.dart';
 import 'package:flutter/material.dart';
 
 class Styles extends StatefulWidget {

@@ -1,7 +1,7 @@
-import 'package:closet/screens/home/home_index.dart';
-import 'package:closet/screens/home/profile.dart';
-import 'package:closet/screens/home/styles.dart';
-import 'package:closet/screens/home/whats_hot.dart';
+import 'package:vastram/screens/home/home_index.dart';
+import 'package:vastram/screens/home/profile.dart';
+import 'package:vastram/screens/home/styles.dart';
+import 'package:vastram/screens/home/whats_hot.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {

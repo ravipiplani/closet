@@ -1,4 +1,4 @@
-import 'package:closet/components/decorated_container.dart';
+import 'package:vastram/components/decorated_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

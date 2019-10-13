@@ -1,8 +1,8 @@
-import 'package:closet/components/customappbar.dart';
-import 'package:closet/components/decorated_container.dart';
-import 'package:closet/components/home/date_selector.dart';
-import 'package:closet/components/home/today_outfit.dart';
-import 'package:closet/components/home/weather_report.dart';
+import 'package:vastram/components/customappbar.dart';
+import 'package:vastram/components/decorated_container.dart';
+import 'package:vastram/components/home/date_selector.dart';
+import 'package:vastram/components/home/today_outfit.dart';
+import 'package:vastram/components/home/weather_report.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

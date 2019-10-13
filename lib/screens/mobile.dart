@@ -1,6 +1,6 @@
-import 'package:closet/components/auth/home_button.dart';
-import 'package:closet/components/logo.dart';
-import 'package:closet/components/decorated_container.dart';
+import 'package:vastram/components/auth/home_button.dart';
+import 'package:vastram/components/logo.dart';
+import 'package:vastram/components/decorated_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

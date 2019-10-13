@@ -1,6 +1,6 @@
-import 'package:closet/components/auth/home_button.dart';
-import 'package:closet/components/camera.dart';
-import 'package:closet/components/decorated_container.dart';
+import 'package:vastram/components/auth/home_button.dart';
+import 'package:vastram/components/camera.dart';
+import 'package:vastram/components/decorated_container.dart';
 import 'package:flutter/material.dart';
 
 class NewItem extends StatefulWidget {
