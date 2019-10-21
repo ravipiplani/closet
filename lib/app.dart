@@ -1,9 +1,17 @@
+import 'package:redux_logging/redux_logging.dart';
+import 'package:vastram/middleware/auth_middleware.dart';
+import 'package:vastram/models/app_state.dart';
+import 'package:vastram/reducers/app_reducer.dart';
 import 'package:vastram/screens/home.dart';
 import 'package:vastram/screens/items/new_item.dart';
 import 'package:vastram/screens/mobile.dart';
 import 'package:vastram/screens/walkthrough.dart';
 import 'package:flutter/material.dart';
 import 'package:vastram/screens/auth.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class AppRootWidget extends StatefulWidget {
   @override
@@ -13,6 +21,10 @@ class AppRootWidget extends StatefulWidget {
 class _AppRootWidgetState extends State<AppRootWidget> {
   int primaryColor = 0xff1e3b65;
   int accentColor = 0xFFEE4DB9;
+
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
+
   ThemeData get _themeData => new ThemeData(
     brightness: Brightness.dark,
     primaryColor: Color(primaryColor),
@@ -63,19 +75,31 @@ class _AppRootWidgetState extends State<AppRootWidget> {
     ),
   );
 
+  final store = Store<AppState>(
+    appReducer,
+    initialState: AppState(),
+    middleware: []
+      ..addAll(createAuthMiddleware())
+      ..add(LoggingMiddleware.printer()),
+  );
+
   @override
   Widget build (BuildContext context) {
-    return new MaterialApp(
-      title: 'vastram',
-      theme: _themeData,
-      initialRoute: 'home',
-      routes: {
-        '/': (BuildContext context) => Walkthrough(),
-        'auth': (BuildContext context) => Auth(),
-        'mobile': (BuildContext context) => Mobile(),
-        'home': (BuildContext context) => Home(),
-        'new_item': (BuildContext context) => NewItem(),
-      },
+    return StoreProvider(
+      store: store,
+      child: MaterialApp(
+        title: 'Vastram',
+        theme: _themeData,
+        navigatorObservers: <NavigatorObserver>[observer],
+        initialRoute: 'mobile',
+        routes: {
+          '/': (BuildContext context) => Walkthrough(),
+          'auth': (BuildContext context) => Auth(),
+          'mobile': (BuildContext context) => Mobile(),
+          'home': (BuildContext context) => Home(),
+          'new_item': (BuildContext context) => NewItem(),
+        },
+      ),
     );
   }
 }

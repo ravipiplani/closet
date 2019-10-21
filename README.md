@@ -1,16 +1,38 @@
 # vastram
 
-A new Flutter project.
+What to wear!
 
-## Getting Started
+## iOS Firebase Configuration
 
-This project is a starting point for a Flutter application.
+Do the following in xcode
 
-A few resources to get you started if this is your first Flutter project:
+1. Import google plist file into runner folder.
+2. Add following to info.plist file
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>com.googleusercontent.apps.749566680990-7nnj4je3lc0m3l52dtfoa9j6n7j2g96l</string>
+            </array>
+        </dict>
+    </array>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+3. Update AppDelegate.m file to following
+    #include "AppDelegate.h"
+    #include "GeneratedPluginRegistrant.h"
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+    @import Firebase;
+    @implementation AppDelegate
+
+    - (BOOL)application:(UIApplication *)application
+        didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+        [FIRApp configure];
+        [GeneratedPluginRegistrant registerWithRegistry:self];
+        // Override point for customization after application launch.
+        return [super application:application didFinishLaunchingWithOptions:launchOptions];
+    }
+
+    @end

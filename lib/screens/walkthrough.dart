@@ -13,7 +13,7 @@ class _WalkthroughState extends State<Walkthrough> {
   List<Map> _walkthroughPages = [
     {
       "icon": Icons.check_box,
-      "title": "Take control of your vastram"
+      "title": "Take control of your closet"
     },
     {
       "icon": Icons.add_a_photo,

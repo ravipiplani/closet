@@ -26,7 +26,7 @@ class Logo extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(top: 20),
           child: this.showLabel ? Text(
-            'vastram',
+            'VASTRAM',
             style: TextStyle(
               color: Theme.of(context).primaryColor.withOpacity(0.8),
               fontSize: 42,

@@ -5,12 +5,14 @@ import 'package:vastram/components/decorated_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-class Auth extends StatelessWidget {
 
-  void _navigate(context, routeName) {
-    Navigator.of(context).pushNamed(routeName);
-  }
+class Auth extends StatefulWidget {
+  Auth({Key key}) : super(key: key);
 
+  _AuthState createState() => _AuthState();
+}
+
+class _AuthState extends State<Auth> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +34,7 @@ class Auth extends StatelessWidget {
                   ),
                   HomeButton(
                     text: 'or use your mobile number', 
-                    handler: () {_navigate(context, 'mobile');})
+                    handler: () { Navigator.of(context).pushNamed('mobile'); })
                 ]
               )
             )

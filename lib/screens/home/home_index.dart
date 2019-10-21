@@ -45,7 +45,7 @@ class _HomeIndexState extends State<HomeIndex> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 singlePost(),
-                singlePost(date: '2019-08-19'),
+                singlePost(date: '2019-08-20'),
                 singlePost(date: '2019-08-18'),
                 singlePost(date: '2019-08-18')
               ],
