@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vastram/components/customappbar.dart';
 import 'package:vastram/components/decorated_container.dart';
 import 'package:vastram/components/home/date_selector.dart';
@@ -15,6 +16,11 @@ class HomeIndex extends StatefulWidget {
 class _HomeIndexState extends State<HomeIndex> {
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth.instance
+        .currentUser()
+        .then((currentUser) => {
+          print(currentUser)
+        });
     return Scaffold(
       appBar: CustomAppBar(),
       backgroundColor: Colors.transparent,

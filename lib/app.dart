@@ -1,7 +1,6 @@
-import 'package:redux_logging/redux_logging.dart';
-import 'package:vastram/middleware/auth_middleware.dart';
+import 'package:vastram/keys.dart';
 import 'package:vastram/models/app_state.dart';
-import 'package:vastram/reducers/app_reducer.dart';
+import 'package:vastram/routes.dart';
 import 'package:vastram/screens/home.dart';
 import 'package:vastram/screens/items/new_item.dart';
 import 'package:vastram/screens/mobile.dart';
@@ -13,12 +12,16 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-class AppRootWidget extends StatefulWidget {
+class AppRoot extends StatefulWidget {
+  final Store<AppState> store;
+
+  const AppRoot({Key key, this.store}): super(key: key);
+
   @override
-  _AppRootWidgetState createState() => new _AppRootWidgetState();
+  _AppRootState createState() => new _AppRootState();
 }
 
-class _AppRootWidgetState extends State<AppRootWidget> {
+class _AppRootState extends State<AppRoot> {
   int primaryColor = 0xff1e3b65;
   int accentColor = 0xFFEE4DB9;
 
@@ -75,29 +78,23 @@ class _AppRootWidgetState extends State<AppRootWidget> {
     ),
   );
 
-  final store = Store<AppState>(
-    appReducer,
-    initialState: AppState(),
-    middleware: []
-      ..addAll(createAuthMiddleware())
-      ..add(LoggingMiddleware.printer()),
-  );
-
   @override
   Widget build (BuildContext context) {
-    return StoreProvider(
-      store: store,
+    print(widget.store.state);
+    return StoreProvider<AppState>(
+      store: widget.store,
       child: MaterialApp(
         title: 'Vastram',
         theme: _themeData,
         navigatorObservers: <NavigatorObserver>[observer],
-        initialRoute: 'mobile',
+        navigatorKey: Keys.navigatorKey,
+        initialRoute: widget.store.state.isLoggedIn ? Routes.homeScreen : Routes.mobileScreen,
         routes: {
-          '/': (BuildContext context) => Walkthrough(),
-          'auth': (BuildContext context) => Auth(),
-          'mobile': (BuildContext context) => Mobile(),
-          'home': (BuildContext context) => Home(),
-          'new_item': (BuildContext context) => NewItem(),
+          Routes.homeScreen: (BuildContext context) => Walkthrough(),
+          Routes.authScreen: (BuildContext context) => Auth(),
+          Routes.mobileScreen: (BuildContext context) => Mobile(),
+          Routes.homeScreen: (BuildContext context) => Home(),
+          Routes.newItemScreen: (BuildContext context) => NewItem(),
         },
       ),
     );

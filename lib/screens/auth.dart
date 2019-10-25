@@ -5,6 +5,7 @@ import 'package:vastram/components/decorated_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:vastram/routes.dart';
 
 class Auth extends StatefulWidget {
   Auth({Key key}) : super(key: key);
@@ -34,7 +35,7 @@ class _AuthState extends State<Auth> {
                   ),
                   HomeButton(
                     text: 'or use your mobile number', 
-                    handler: () { Navigator.of(context).pushNamed('mobile'); })
+                    handler: () { Navigator.of(context).pushNamed(Routes.mobileScreen); })
                 ]
               )
             )

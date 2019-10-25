@@ -1,23 +1,32 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
+@immutable
 class AppState {
   final bool isLoading;
-  final FirebaseUser currentUser;
+  final bool isLoggedIn;
 
   AppState({
     this.isLoading = false,
-    this.currentUser,
+    this.isLoggedIn = false,
   });
 
-  AppState copyWith({bool isLoading}) {
+  AppState copyWith({bool isLoading, bool isLoggedIn}) {
     return AppState(
       isLoading: isLoading ?? this.isLoading,
-      currentUser: currentUser ?? this.currentUser,
+      isLoggedIn: isLoggedIn ?? this.isLoggedIn,
     );
+  }
+
+  static AppState fromJson(dynamic json) {
+    return AppState(isLoggedIn: json["isLoggedIn"]);
+  }
+
+  dynamic toJson() {
+    return {'isLoggedIn': isLoggedIn};
   }
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, currentUser: $currentUser}';
+    return 'AppState{isLoading: $isLoading, isLoggedIn: $isLoggedIn}';
   }
 }

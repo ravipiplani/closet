@@ -1,3 +1,4 @@
+import 'package:vastram/routes.dart';
 import 'package:vastram/screens/home/home_index.dart';
 import 'package:vastram/screens/home/profile.dart';
 import 'package:vastram/screens/home/styles.dart';
@@ -111,7 +112,7 @@ class _HomeState extends State<Home> {
                   icon: Icon(Icons.add, color: Theme.of(context).primaryColor,),
                   label: Text('Add Cloth', style: Theme.of(context).textTheme.subhead.copyWith(color: Theme.of(context).primaryColor),),
                   onPressed: () {
-                    Navigator.of(context).pushNamed('new_item');
+                    Navigator.of(context).pushNamed(Routes.newItemScreen);
                   },
                 ),
               ),

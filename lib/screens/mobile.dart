@@ -21,33 +21,6 @@ class _MobileState extends State<Mobile> {
   String otp;
   String verificationId;
   String errorMessage = '';
-  FirebaseAuth _auth = FirebaseAuth.instance;
-
-  Future<void> verifyPhone() async {    
-    final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
-        this.verificationId = verId;
-        smsOTPDialog(context).then((value) {
-          print('sign in');
-        });
-    };
-    try {
-      await _auth.verifyPhoneNumber(
-        phoneNumber: this.phoneNo, // PHONE NUMBER TO SEND OTP
-        codeAutoRetrievalTimeout: (String verId) {
-          this.verificationId = verId;
-        },
-      codeSent: smsOTPSent, // WHEN CODE SENT THEN WE OPEN DIALOG TO ENTER OTP.
-      timeout: const Duration(seconds: 20),
-      verificationCompleted: (AuthCredential phoneAuthCredential) {
-        print(phoneAuthCredential);
-      },
-      verificationFailed: (AuthException exception) {
-        print('${exception.message}');
-      });
-    } catch (e) {    
-      handleError(e);
-    }
-  }
 
   Future<bool> smsOTPDialog(BuildContext context) {
     return showDialog(
@@ -69,18 +42,17 @@ class _MobileState extends State<Mobile> {
             }
           ),
           actions: <Widget>[
-            FlatButton(
-              child: new Text('VERIFY'),
-              onPressed: () {    
-                _auth.currentUser().then((user) {    
-                  if (user != null) {
-                      Navigator.of(context).pop();    
-                      Navigator.of(context).pushReplacementNamed('home');    
-                  } else {    
-                      signIn();    
-                  }    
-                });
-              }
+            StoreConnector<AppState, VoidCallback>(
+              converter: (store) {
+                return () => store.dispatch(VerifyOTP(
+                  verificationId: this.verificationId,
+                  otp: this.otp
+                ));
+              },
+              builder: (context, callback) => FlatButton(
+                child: Text('VERIFY'),
+                onPressed: callback
+              ),
             ),
             FlatButton(
               child: new Text('CANCEL'),
@@ -94,22 +66,6 @@ class _MobileState extends State<Mobile> {
     );
   }
     
-  signIn() async {    
-    try {    
-      final AuthCredential credential =   PhoneAuthProvider.getCredential(
-        verificationId: verificationId,
-        smsCode: otp,
-      );
-      final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
-      final FirebaseUser currentUser = await _auth.currentUser();
-      assert(user.uid == currentUser.uid);
-      Navigator.of(context).pop();
-      Navigator.of(context).pushReplacementNamed('home');
-    } catch (e) {
-        handleError(e);
-    }
-  }    
-    
   handleError(PlatformException error) {    
     print(error);
     switch (error.code) {
@@ -120,7 +76,7 @@ class _MobileState extends State<Mobile> {
         });
         Navigator.of(context).pop();
         smsOTPDialog(context).then((value) {
-            print('sign in');
+            print('ERROR_INVALID_VERIFICATION_CODE');
         });
         break;
       default:
@@ -136,7 +92,7 @@ class _MobileState extends State<Mobile> {
     PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
       verificationId = verId;
       smsOTPDialog(context).then((value) {
-        print('sign in');
+        print('hg');
       });
     };
     return Scaffold(
@@ -179,7 +135,7 @@ class _MobileState extends State<Mobile> {
               ),
               StoreConnector<AppState, VoidCallback>(
                 converter: (store) {
-                  return () => store.dispatch(LogIn(
+                  return () => store.dispatch(SendOTP(
                     phone: this.phoneNo,
                     codeSent: smsOTPSent,
                     codeAutoRetrievalTimeout: (String verId) {

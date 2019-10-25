@@ -2,6 +2,7 @@ import 'package:vastram/components/auth/home_button.dart';
 import 'package:vastram/components/decorated_container.dart';
 import 'package:vastram/components/logo.dart';
 import 'package:flutter/material.dart';
+import 'package:vastram/routes.dart';
 
 class Walkthrough extends StatefulWidget {
   @override
@@ -70,7 +71,7 @@ class _WalkthroughState extends State<Walkthrough> {
                       leftBorder: true,
                       handler: () {
                         if (_controller.page == 2.0) {
-                          Navigator.of(context).pushNamed('auth');
+                          Navigator.of(context).pushNamed(Routes.authScreen);
                           return;
                         }
                         _controller.nextPage(duration: _kDuration, curve: _kCurve);
