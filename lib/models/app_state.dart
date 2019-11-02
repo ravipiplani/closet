@@ -1,32 +1,33 @@
 import 'package:flutter/cupertino.dart';
+import 'package:vastram/models/auth_state.dart';
 
 @immutable
 class AppState {
   final bool isLoading;
-  final bool isLoggedIn;
+  final AuthState authState;
 
   AppState({
-    this.isLoading = false,
-    this.isLoggedIn = false,
+    this.isLoading,
+    this.authState
   });
 
-  AppState copyWith({bool isLoading, bool isLoggedIn}) {
+  AppState copyWith({bool isLoading, AuthState authState}) {
     return AppState(
       isLoading: isLoading ?? this.isLoading,
-      isLoggedIn: isLoggedIn ?? this.isLoggedIn,
+      authState: authState ?? this.authState
     );
   }
 
   static AppState fromJson(dynamic json) {
-    return AppState(isLoggedIn: json["isLoggedIn"]);
+    return AppState(authState: json["authState"]);
   }
 
   dynamic toJson() {
-    return {'isLoggedIn': isLoggedIn};
+    return {'authState': authState};
   }
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, isLoggedIn: $isLoggedIn}';
+    return 'AppState{isLoading: $isLoading, authState: $authState}';
   }
 }

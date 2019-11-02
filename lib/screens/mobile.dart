@@ -92,7 +92,6 @@ class _MobileState extends State<Mobile> {
     PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
       verificationId = verId;
       smsOTPDialog(context).then((value) {
-        print('hg');
       });
     };
     return Scaffold(
@@ -109,7 +108,7 @@ class _MobileState extends State<Mobile> {
                     Logo(
                       position: 100,
                       showLabel: false,
-                      smallLogo: true,
+                      size: 70,
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 20),

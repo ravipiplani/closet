@@ -1,6 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
+class CheckIfAlreadyRegistered {
+  final String phone;
+
+  CheckIfAlreadyRegistered({this.phone});
+
+  @override
+  String toString() {
+    return 'CheckIfAlreadyRegistered{phone: $phone}';
+  }
+}
+
+class AlreadyRegistered {}
+
+class NewUser {}
+
 class SendOTP {
   final String phone;
   final PhoneCodeSent codeSent;

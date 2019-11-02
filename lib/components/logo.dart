@@ -4,17 +4,18 @@ import 'package:flutter/widgets.dart';
 class Logo extends StatelessWidget {
   final double position;
   final bool showLabel;
-  final bool smallLogo;
+  final double size;
 
-  Logo({this.position, this.showLabel = true, this.smallLogo = false});
+  Logo({this.position, this.showLabel = true, this.size = 100});
 
   @override
   Widget build (BuildContext context) {
     return Column (
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          width: this.smallLogo ? 70 : 100,
-          height: this.smallLogo ? 70 : 100,
+          width: this.size,
+          height: this.size,
           margin: EdgeInsets.only(top: this.position),
           decoration: BoxDecoration(
             image: DecorationImage(

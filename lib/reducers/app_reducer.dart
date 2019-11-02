@@ -5,6 +5,6 @@ import 'package:vastram/reducers/loading_reducer.dart';
 AppState appReducer(AppState state, action) {
   return AppState(
     isLoading: loadingReducer(state.isLoading, action),
-    isLoggedIn: authReducer(state.isLoggedIn, action)
+    authState: authReducer(state.authState, action)
   );
 }

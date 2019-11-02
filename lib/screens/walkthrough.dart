@@ -94,7 +94,7 @@ class _WalkthroughState extends State<Walkthrough> {
           Logo(
             position: 120,
             showLabel: false,
-            smallLogo: true,
+            size: 70,
           ),
           Container(
             margin: EdgeInsets.only(top: 80),

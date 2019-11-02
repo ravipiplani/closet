@@ -8,6 +8,7 @@ import 'package:redux_thunk/redux_thunk.dart';
 import 'package:vastram/app.dart';
 import 'package:vastram/middleware/auth_middleware.dart';
 import 'package:vastram/models/app_state.dart';
+import 'package:vastram/models/auth_state.dart';
 import 'package:vastram/reducers/app_reducer.dart';
 
 void main() async {
@@ -24,7 +25,14 @@ void main() async {
     initialState = await persistor.load();
   }
   catch (e) {
-    initialState = AppState();
+    initialState = AppState(
+      isLoading: false,
+      authState: AuthState(
+        isAlreadyRegistered: false,
+        isNewUser: false,
+        isAuthenticated: false
+      )
+    );
   }
 
   final store = Store<AppState>(

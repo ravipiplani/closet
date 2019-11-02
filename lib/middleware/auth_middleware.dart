@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:redux/redux.dart';
 import 'package:vastram/actions/auth_actions.dart';
@@ -7,15 +8,42 @@ import 'package:vastram/models/app_state.dart';
 import 'package:vastram/routes.dart';
 
 List<Middleware<AppState>> createAuthMiddleware() {
+  final checkIfAlreadyRegistered = _createCheckIfAlreadyRegisteredMiddleware();
   final sendOTP = _createSendOTPMiddleware();
   final verifyOTP = _createVerifyOTPMiddleware();
   final logOut = _createLogOutMiddleware();
 
   return [
+    TypedMiddleware<AppState, CheckIfAlreadyRegistered>(checkIfAlreadyRegistered),
     TypedMiddleware<AppState, SendOTP>(sendOTP),
     TypedMiddleware<AppState, VerifyOTP>(verifyOTP),
     TypedMiddleware<AppState, LogOut>(logOut),
   ];
+}
+
+Middleware<AppState> _createCheckIfAlreadyRegisteredMiddleware() {
+  return (Store store, action, NextDispatcher next) async {
+    if (action is CheckIfAlreadyRegistered) {
+      try {
+        store.dispatch(StartLoading());
+        Firestore.instance.collection('users').where('mobile', isEqualTo: action.phone).snapshots().listen((data) {
+          if (data.documents.length > 0){
+            Keys.navigatorKey.currentState.pushNamed(Routes.otpScreen);
+            store.dispatch(AlreadyRegistered());
+          }
+          else {
+            store.dispatch(NewUser());
+          }
+          store.dispatch(StopLoading());
+        });
+      }
+      catch (e) {
+        // throw the Firebase AuthException that we caught
+        throw new AuthException(e.code, e.message);
+      }
+    }
+    next(action);
+  };
 }
 
 Middleware<AppState> _createSendOTPMiddleware() {
@@ -36,6 +64,7 @@ Middleware<AppState> _createSendOTPMiddleware() {
         store.dispatch(StopLoading());
       }
       catch (error) {
+        store.dispatch(StopLoading());
         print(error);
       }
     }
@@ -76,7 +105,8 @@ Middleware<AppState> _createLogOutMiddleware() {
     try {
       await _auth.signOut();
       print('logging out...');
-      store.dispatch(new LogOutSuccessful());
+      Keys.navigatorKey.currentState.pushReplacementNamed(Routes.mobileScreen);
+      store.dispatch(LogOutSuccessful());
     } catch (error) {
       print(error);
     }

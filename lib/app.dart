@@ -4,6 +4,8 @@ import 'package:vastram/routes.dart';
 import 'package:vastram/screens/home.dart';
 import 'package:vastram/screens/items/new_item.dart';
 import 'package:vastram/screens/mobile.dart';
+import 'package:vastram/screens/onboarding.dart';
+import 'package:vastram/screens/otp.dart';
 import 'package:vastram/screens/walkthrough.dart';
 import 'package:flutter/material.dart';
 import 'package:vastram/screens/auth.dart';
@@ -88,11 +90,13 @@ class _AppRootState extends State<AppRoot> {
         theme: _themeData,
         navigatorObservers: <NavigatorObserver>[observer],
         navigatorKey: Keys.navigatorKey,
-        initialRoute: widget.store.state.isLoggedIn ? Routes.homeScreen : Routes.mobileScreen,
+        initialRoute: widget.store.state.authState.isAuthenticated ? Routes.homeScreen : Routes.onBoardingScreen,
         routes: {
           Routes.homeScreen: (BuildContext context) => Walkthrough(),
           Routes.authScreen: (BuildContext context) => Auth(),
+          Routes.otpScreen: (BuildContext context) => Otp(),
           Routes.mobileScreen: (BuildContext context) => Mobile(),
+          Routes.onBoardingScreen: (BuildContext context) => Onboarding(),
           Routes.homeScreen: (BuildContext context) => Home(),
           Routes.newItemScreen: (BuildContext context) => NewItem(),
         },
