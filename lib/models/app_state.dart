@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:vastram/models/auth_state.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'app_state.g.dart';
+
+@JsonSerializable()
 @immutable
 class AppState {
   final bool isLoading;
@@ -11,20 +15,16 @@ class AppState {
     this.authState
   });
 
-  AppState copyWith({bool isLoading, AuthState authState}) {
+  AppState copyWith({bool isLoading, bool isNewUser, AuthState authState}) {
     return AppState(
       isLoading: isLoading ?? this.isLoading,
       authState: authState ?? this.authState
     );
   }
 
-  static AppState fromJson(dynamic json) {
-    return AppState(authState: json["authState"]);
-  }
+  static AppState fromJson(dynamic json) => _$AppStateFromJson(json);
 
-  dynamic toJson() {
-    return {'authState': authState};
-  }
+  Map<String, dynamic> toJson() => _$AppStateToJson(this);
 
   @override
   String toString() {

@@ -28,6 +28,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   strings: ^0.1.2
   country_pickers: ^1.1.0
+  json_annotation: ^2.0.0
 
   redux: ^3.0.0
   flutter_redux: ^0.5.3
@@ -44,6 +45,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.7.0"
+  build_runner: ^1.0.0
+  json_serializable: ^2.0.0
 
 flutter_icons:
   ios: true

@@ -3,7 +3,6 @@ import 'package:redux/redux.dart';
 import 'package:vastram/components/decorated_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:vastram/components/loader.dart';
 import 'package:vastram/models/app_state.dart';
 
 class HomeButton extends StatefulWidget {

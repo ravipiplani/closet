@@ -23,12 +23,15 @@ void main() async {
   AppState initialState;
   try {
     initialState = await persistor.load();
+    initialState = initialState.copyWith(isLoading: false);
+    if (!initialState.authState.isAuthenticated) {
+      initialState = initialState.copyWith(authState: initialState.authState.copyWith(isNewUser: false));
+    }
   }
   catch (e) {
     initialState = AppState(
       isLoading: false,
       authState: AuthState(
-        isAlreadyRegistered: false,
         isNewUser: false,
         isAuthenticated: false
       )

@@ -5,31 +5,35 @@ import 'package:vastram/actions/auth_actions.dart';
 import 'package:vastram/actions/loading_actions.dart';
 import 'package:vastram/keys.dart';
 import 'package:vastram/models/app_state.dart';
+import 'package:vastram/models/user.dart';
 import 'package:vastram/routes.dart';
 
 List<Middleware<AppState>> createAuthMiddleware() {
-  final checkIfAlreadyRegistered = _createCheckIfAlreadyRegisteredMiddleware();
+  final checkIfUserExists = _createCheckIfUserExistsMiddleware();
   final sendOTP = _createSendOTPMiddleware();
   final verifyOTP = _createVerifyOTPMiddleware();
   final logOut = _createLogOutMiddleware();
 
   return [
-    TypedMiddleware<AppState, CheckIfAlreadyRegistered>(checkIfAlreadyRegistered),
+    TypedMiddleware<AppState, CheckIfUserExists>(checkIfUserExists),
     TypedMiddleware<AppState, SendOTP>(sendOTP),
     TypedMiddleware<AppState, VerifyOTP>(verifyOTP),
     TypedMiddleware<AppState, LogOut>(logOut),
   ];
 }
 
-Middleware<AppState> _createCheckIfAlreadyRegisteredMiddleware() {
+Middleware<AppState> _createCheckIfUserExistsMiddleware() {
   return (Store store, action, NextDispatcher next) async {
-    if (action is CheckIfAlreadyRegistered) {
+    if (action is CheckIfUserExists) {
       try {
         store.dispatch(StartLoading());
-        Firestore.instance.collection('users').where('mobile', isEqualTo: action.phone).snapshots().listen((data) {
-          if (data.documents.length > 0){
+        Firestore.instance.collection('users').where('mobile', isEqualTo: action.mobile).getDocuments(source: Source.server).then((querySnapshot) {
+          List<User> users = querySnapshot.documents.map((documentSnapshot) {
+            return User.fromJson(documentSnapshot.data);
+          }).toList();
+          if (users.isNotEmpty && users.first.isRegistered){
             Keys.navigatorKey.currentState.pushNamed(Routes.otpScreen);
-            store.dispatch(AlreadyRegistered());
+            store.dispatch(AlreadyExists(user: users.first));
           }
           else {
             store.dispatch(NewUser());

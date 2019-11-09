@@ -1,20 +1,43 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:vastram/models/user.dart';
 
-class CheckIfAlreadyRegistered {
-  final String phone;
+class CheckIfUserExists {
+  final String mobile;
 
-  CheckIfAlreadyRegistered({this.phone});
+  CheckIfUserExists({this.mobile});
 
   @override
   String toString() {
-    return 'CheckIfAlreadyRegistered{phone: $phone}';
+    return 'CheckIfUserExists{mobile: $mobile}';
   }
 }
 
-class AlreadyRegistered {}
+class AlreadyExists {
+  final User user;
+
+  AlreadyExists({this.user});
+
+  @override
+  String toString() {
+    return 'AlreadyExists{user: $user}';
+  }
+}
 
 class NewUser {}
+
+class UpdateUser {
+  final Map<String, String> keyValues;
+
+  UpdateUser({this.keyValues});
+
+  @override
+  String toString() {
+    return 'UpdateUser{keyValues: $keyValues}';
+  }
+}
+
+class RegisterUser {}
 
 class SendOTP {
   final String phone;

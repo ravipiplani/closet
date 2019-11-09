@@ -18,8 +18,8 @@ class _HomeIndexState extends State<HomeIndex> {
   Widget build(BuildContext context) {
     FirebaseAuth.instance
         .currentUser()
-        .then((currentUser) => {
-          print(currentUser)
+        .then((currentUser) {
+          print(currentUser);
         });
     return Scaffold(
       appBar: CustomAppBar(),

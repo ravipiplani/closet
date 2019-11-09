@@ -73,7 +73,7 @@ class _AppRootState extends State<AppRoot> {
       ),
       hintStyle: TextStyle(
         color: Color(primaryColor).withOpacity(0.3)
-      ),
+      )
     ),
     buttonTheme: ButtonThemeData(
       splashColor: Theme.of(context).primaryColor.withOpacity(0.2)
