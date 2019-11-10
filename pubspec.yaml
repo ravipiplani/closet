@@ -29,6 +29,7 @@ dependencies:
   strings: ^0.1.2
   country_pickers: ^1.1.0
   json_annotation: ^2.0.0
+  badges: ^1.1.0
 
   redux: ^3.0.0
   flutter_redux: ^0.5.3
@@ -74,8 +75,8 @@ flutter:
    - assets/images/closeup.jpg
    - assets/images/item-type-top.png
    - assets/images/item-type-bottom.png
-   - assets/images/item-type-accessories.png
-   - assets/images/item-type-footwears.png
+   - assets/images/item-type-accessory.png
+   - assets/images/item-type-footwear.png
    - assets/images/item-type-lingerie.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

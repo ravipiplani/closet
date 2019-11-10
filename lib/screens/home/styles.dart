@@ -1,6 +1,7 @@
+import 'package:badges/badges.dart';
 import 'package:vastram/components/decorated_container.dart';
-import 'package:vastram/screens/items/list_items.dart';
 import 'package:flutter/material.dart';
+import 'package:vastram/routes.dart';
 
 class Styles extends StatefulWidget {
   Styles({Key key}) : super(key: key);
@@ -9,12 +10,59 @@ class Styles extends StatefulWidget {
 }
 
 class _StylesState extends State<Styles> {
+  List<Map> _categories = [
+    {
+      "name": "top",
+      "image": "item-type-top.png"
+    },
+    {
+      "name": "bottom",
+      "image": "item-type-bottom.png"
+    },
+    {
+      "name": "footwear",
+      "image": "item-type-footwear.png"
+    },
+    {
+      "name": "accessory",
+      "image": "item-type-accessory.png"
+    },
+    {
+      "name": "lingerie",
+      "image": "item-type-lingerie.png"
+    }
+  ];
+  int selectedCategoryIndex = 0;
+
+  List<Color> colors = [
+    Colors.red,
+    Colors.blue,
+    Colors.green,
+    Colors.yellow,
+    Colors.orange,
+    Colors.pink,
+    Colors.black,
+    Colors.white,
+  ];
+  int selectedChip = 0;
+
+  @override
+  void initState() {
+    selectedCategoryIndex = 0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    print(_categories);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColor,
         appBar: AppBar(
+          // backgroundColor: Theme.of(context).primaryColor,
+          leading: Container(),
+          elevation: 0.0,
           flexibleSpace: SafeArea(
             child: TabBar(
               labelPadding: EdgeInsets.only(top: 5),
@@ -67,7 +115,7 @@ class _StylesState extends State<Styles> {
                     image: AssetImage("assets/images/item-type-bottom.png"),
                   ),
                   Image(
-                    image: AssetImage("assets/images/item-type-footwears.png"),
+                    image: AssetImage("assets/images/item-type-footwear.png"),
                   ),
                   Image(
                     image: AssetImage("assets/images/item-type-lingerie.png"),
@@ -82,94 +130,133 @@ class _StylesState extends State<Styles> {
   }
 
   Widget get items {
-    return Container(
-      color: Colors.white,
-      child: ListView(
-        children: <Widget>[
-          group('Tops', 'item-type-top.png'),
-          group('Bottoms', 'item-type-bottom.png'),
-          group('Footwears', 'item-type-footwears.png'),
-          group('Acessories', 'item-type-accessories.png'),
-          group('Lingerie', 'item-type-lingerie.png'),
-        ],
+    List<Widget> items = List.generate(10, (index) {
+      return Container(
+        padding: EdgeInsets.all(0),
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.all(Radius.circular(20))
+        ),
+        child: Image(
+          image: AssetImage("assets/images/item-type-top.png"),
+          color: Colors.grey,
+        ),
+      );
+    });
+    items.insert(0, Container(
+      padding: EdgeInsets.all(0),
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.all(Radius.circular(20))
       ),
+      child: IconButton(
+        icon: Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).pushNamed(Routes.newItemScreen);
+        },
+      )
+    ));
+    return Theme(
+      data: ThemeData(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent
+      ),
+      child: DefaultTabController(
+        length: _categories.length,
+        initialIndex: 0,
+        child: Scaffold(
+          backgroundColor: Theme.of(context).primaryColor,
+          appBar: AppBar(
+            leading: Container(),
+            elevation: 0,
+            backgroundColor: Theme.of(context).primaryColor,
+            flexibleSpace: SafeArea(
+              child: TabBar(
+                onTap: (index) {
+                  setState(() {
+                    selectedCategoryIndex = index;
+                  });
+                },
+                indicatorColor: Colors.transparent,
+                unselectedLabelColor: Colors.red,
+                tabs: List<Widget>.generate(_categories.length, (int index) {
+                  return Tab(
+                    child: categoryBadge(index),
+                  );
+                })
+              )
+            )
+          ),
+          body: Container(
+            color: Colors.white,
+            padding: EdgeInsets.all(15),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(colors.length, (index) {
+                    return ChoiceChip(
+                      labelPadding: EdgeInsets.all(0),
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      selected: selectedChip == index,
+                      label: Text(''),
+                      selectedColor: colors[index],
+                      backgroundColor: colors[index],
+                      avatar: selectedChip == index ? Icon(Icons.check, color: colors[index] == Colors.white ? Colors.black: Colors.white) : null,
+                      onSelected: (bool selected) {
+                        setState(() {
+                          selectedChip = selected ? index : null;
+                        });
+                      }
+                    );
+                  })
+                ),
+                Expanded(
+                  child: TabBarView(
+                    children: <Widget>[
+                      Container(
+                        child: GridView.count(
+                          padding: EdgeInsets.only(top: 16),
+                          crossAxisCount: 4,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                          shrinkWrap: true,
+                          primary: true,
+                          children: items,
+                        ),
+                      ),
+                      Container(),
+                      Container(),
+                      Container(),
+                      Container()
+                    ],
+                  ),
+                )
+              ],
+            )
+          )
+        )
+      )
     );
   }
 
-  Widget group (text, image) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          Navigator.of(context).push(
-            PageRouteBuilder(
-              opaque: true,
-              pageBuilder: (BuildContext context, _, __) {
-                return ListItems(itemType: text);
-              },
-              transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
-                return SlideTransition(
-                  child: child,
-                  position: Tween<Offset>(
-                    begin: Offset(500, 0),
-                    end: Offset.zero
-                  ).animate(animation),
-                );
-              },
-            )
-          );
-        },
-        splashColor: Theme.of(context).primaryColor.withOpacity(0.5),
-        child: Container(
-          height: 200,
-          padding: EdgeInsets.only(left: 40),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              stops: [0, 1],
-              colors: [
-                const Color(0xFF21D0FD).withOpacity(0.2),
-                const Color(0xFFEE4DB9).withOpacity(0.2)
-              ],
-            ),
-            border: Border(
-              top: BorderSide(
-                width: 1,
-                color: Theme.of(context).primaryColor.withOpacity(0.3)
-              ) 
-            )
-          ),
-          child: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(text, style: Theme.of(context).textTheme.display2.copyWith(fontWeight: FontWeight.bold), textAlign: TextAlign.left,),
-                  DecoratedContainer(
-                    showGradient: false,
-                    showImage: false,
-                    color: Colors.transparent,
-                    margin: EdgeInsets.only(top: 12),
-                    child: Text('10 Items', style: Theme.of(context).textTheme.display3),
-                  )
-                ],
-              ),
-              Positioned(
-                bottom: -100,
-                right: -20,
-                child: Opacity(
-                  opacity: 0.3,
-                  child: Image(
-                    image: AssetImage("assets/images/$image"),
-                    height: 260,
-                  ),
-                )
-              )
-            ],
-          )
+  Widget categoryBadge (index) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 0, top: 5),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: Container(
+        child: Image(
+          image: AssetImage("assets/images/" + _categories[index]['image']),
+          height: 40,
+          color: selectedCategoryIndex == index ? Theme.of(context).accentColor : Colors.grey.shade500
+        ),
+        decoration: BoxDecoration(
+          color: selectedCategoryIndex == index ? Theme.of(context).accentColor.withOpacity(0.2) : Colors.white,
+          border: Border.all(width: 1, color: selectedCategoryIndex == index ? Theme.of(context).accentColor.withOpacity(0.4) : Colors.grey.shade400),
+          borderRadius: BorderRadius.circular(5.0),
         ),
       )
     );
