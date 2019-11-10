@@ -35,7 +35,7 @@ class _AuthState extends State<Auth> {
                   ),
                   HomeButton(
                     text: 'or use your mobile number', 
-                    handler: () { Navigator.of(context).pushNamed(Routes.mobileScreen); })
+                    handler: () { Navigator.of(context).pushNamed(Routes.onBoardingScreen); })
                 ]
               )
             )

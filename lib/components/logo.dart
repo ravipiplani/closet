@@ -5,13 +5,14 @@ class Logo extends StatelessWidget {
   final double position;
   final bool showLabel;
   final double size;
+  final CrossAxisAlignment alignment;
 
-  Logo({this.position, this.showLabel = true, this.size = 100});
+  Logo({this.position, this.showLabel = true, this.size = 100, this.alignment = CrossAxisAlignment.center});
 
   @override
   Widget build (BuildContext context) {
     return Column (
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: this.alignment,
       children: <Widget>[
         Container(
           width: this.size,

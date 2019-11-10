@@ -3,7 +3,6 @@ import 'package:vastram/models/app_state.dart';
 import 'package:vastram/routes.dart';
 import 'package:vastram/screens/home.dart';
 import 'package:vastram/screens/items/new_item.dart';
-import 'package:vastram/screens/mobile.dart';
 import 'package:vastram/screens/onboarding.dart';
 import 'package:vastram/screens/otp.dart';
 import 'package:vastram/screens/walkthrough.dart';
@@ -90,12 +89,11 @@ class _AppRootState extends State<AppRoot> {
         theme: _themeData,
         navigatorObservers: <NavigatorObserver>[observer],
         navigatorKey: Keys.navigatorKey,
-        initialRoute: widget.store.state.authState.isAuthenticated ? Routes.homeScreen : Routes.onBoardingScreen,
+        initialRoute: widget.store.state.authState.isAuthenticated ? Routes.homeScreen : Routes.walkthroughScreen,
         routes: {
-          Routes.homeScreen: (BuildContext context) => Walkthrough(),
+          Routes.walkthroughScreen: (BuildContext context) => Walkthrough(),
           Routes.authScreen: (BuildContext context) => Auth(),
           Routes.otpScreen: (BuildContext context) => Otp(),
-          Routes.mobileScreen: (BuildContext context) => Mobile(),
           Routes.onBoardingScreen: (BuildContext context) => Onboarding(),
           Routes.homeScreen: (BuildContext context) => Home(),
           Routes.newItemScreen: (BuildContext context) => NewItem(),

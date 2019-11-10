@@ -90,11 +90,14 @@ class _WalkthroughState extends State<Walkthrough> {
   Widget createPage({BuildContext context, String title, IconData icon}) {
     return Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Logo(
-            position: 120,
-            showLabel: false,
-            size: 70,
+          Center(
+            child: Logo(
+              position: 120,
+              showLabel: false,
+              size: 70,
+            )
           ),
           Container(
             margin: EdgeInsets.only(top: 80),

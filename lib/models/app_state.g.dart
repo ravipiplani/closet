@@ -16,5 +16,5 @@ AppState _$AppStateFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$AppStateToJson(AppState instance) => <String, dynamic>{
       'isLoading': instance.isLoading,
-      'authState': instance.authState?.toJson()
+      'authState': instance.authState
     };

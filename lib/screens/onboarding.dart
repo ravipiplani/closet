@@ -3,6 +3,7 @@ import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:intl/intl.dart';
 import 'package:redux/redux.dart';
 import 'package:vastram/actions/auth_actions.dart';
 import 'package:vastram/components/auth/home_button.dart';
@@ -60,6 +61,7 @@ class _OnboardingState extends State<Onboarding> {
   ];
   FocusNode _focusNode = FocusNode();
   String countryCode = "";
+  String buttonText = "Next";
 
   final _formKey = GlobalKey<FormState>();
 
@@ -67,6 +69,7 @@ class _OnboardingState extends State<Onboarding> {
   void initState() {
     setState(() {
       countryCode = "+91";
+      buttonText = "Next";
     });
     super.initState();
   }
@@ -98,7 +101,7 @@ class _OnboardingState extends State<Onboarding> {
                                 child: Text('VASTRAM', style: Theme.of(context).textTheme.subhead.copyWith(color: Theme.of(context).primaryColor.withOpacity(0.7)))
                               ),
                               Container(
-                                child: Text('Sign Up', style: Theme.of(context).textTheme.display1.copyWith(color: Theme.of(context).accentColor))
+                                child: Text('Get Started', style: Theme.of(context).textTheme.display1.copyWith(color: Theme.of(context).accentColor))
                               ),
                             ],
                           ),
@@ -140,8 +143,7 @@ class _OnboardingState extends State<Onboarding> {
                                     Expanded(
                                       child: InkWell(
                                         onTap: input['name'] == 'dob' ? () {
-                                          print('open date');
-                                          _selectDate();
+                                          _selectDate(_controller);
                                         } : null,
                                         child: IgnorePointer(
                                           ignoring: input['name'] == 'dob' ? true : false,
@@ -193,11 +195,25 @@ class _OnboardingState extends State<Onboarding> {
                 },
                 builder: (BuildContext context, _OnboardingViewModel viewModel) {
                   return HomeButton(
-                    text: 'Next',
+                    text: buttonText,
                     handler: () {
                       Map input = _onboardingPages[_pageController.page.toInt()]['input'];
                       TextEditingController _controller = input['controller'];
-                      viewModel.handler(_pageController, _controller.text, input['name'], _formKey);
+                      if (_formKey.currentState.validate()) {
+                        String _text = _controller.text;
+                        if (_pageController.page.toInt() == 0) {
+                          _text = countryCode + _text;
+                        }
+                        else if (_pageController.page.toInt() == 1) {
+                          setState(() {
+                            buttonText = "Get Started";
+                          });
+                        }
+                        else if (_pageController.page.toInt() == 2) {
+                          _text = DateFormat('MMM dd, yyyy').parse(_text).toString();
+                        }
+                        viewModel.handler(_pageController, _text, input['name']);
+                      }
                     }
                   );
                 }
@@ -237,20 +253,29 @@ class _OnboardingState extends State<Onboarding> {
     );
   }
 
-  Future _selectDate() async {
+  Future _selectDate(TextEditingController controller) async {
     DateTime picked = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2016),
-        lastDate: DateTime(2020)
+        lastDate: DateTime(2020),
+        builder: (BuildContext context, Widget child) {
+          return Theme(
+            data: ThemeData(
+              primaryColor: Theme.of(context).primaryColor,
+              accentColor: Theme.of(context).accentColor
+            ),
+            child: child
+          );
+        }
     );
-    return picked;
+    controller.text = DateFormat('MMM dd, yyyy').format(picked);
   }
 }
 
 class _OnboardingViewModel {
   final bool isNewUser;
-  final Function(PageController, String, String, GlobalKey<FormState>) handler;
+  final Function(PageController, dynamic, String) handler;
 
   _OnboardingViewModel({
     this.isNewUser,
@@ -260,23 +285,21 @@ class _OnboardingViewModel {
   static _OnboardingViewModel fromStore(Store<AppState> store) {
     return _OnboardingViewModel(
       isNewUser: store.state.authState.isNewUser,
-      handler: (pageController, text, name, formKey) {
+      handler: (pageController, text, name) {
         if (store.state.isLoading) {
           return null;
         }
-        if (formKey.currentState.validate()) {
-          store.dispatch(UpdateUser(keyValues: {name: text}));
-          if (store.state.authState.isNewUser) {
-            if (pageController.page.toInt() == 2) {
-              store.dispatch(RegisterUser());
-            }
-            else {
-              pageController.nextPage(duration: _kDuration, curve: _kCurve);
-            }
+        store.dispatch(UpdateUser(keyValues: {name: text}));
+        if (store.state.authState.isNewUser) {
+          if (pageController.page.toInt() == 2) {
+            store.dispatch(RegisterUser());
           }
           else {
-            store.dispatch(CheckIfUserExists(mobile: text));
+            pageController.nextPage(duration: _kDuration, curve: _kCurve);
           }
+        }
+        else {
+          store.dispatch(CheckIfUserExists(mobile: text));
         }
       }
     );

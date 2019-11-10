@@ -10,12 +10,14 @@ import 'package:vastram/routes.dart';
 
 List<Middleware<AppState>> createAuthMiddleware() {
   final checkIfUserExists = _createCheckIfUserExistsMiddleware();
+  final resgiterUser = _createRegisterUserMiddleware();
   final sendOTP = _createSendOTPMiddleware();
   final verifyOTP = _createVerifyOTPMiddleware();
   final logOut = _createLogOutMiddleware();
 
   return [
     TypedMiddleware<AppState, CheckIfUserExists>(checkIfUserExists),
+    TypedMiddleware<AppState, RegisterUser>(resgiterUser),
     TypedMiddleware<AppState, SendOTP>(sendOTP),
     TypedMiddleware<AppState, VerifyOTP>(verifyOTP),
     TypedMiddleware<AppState, LogOut>(logOut),
@@ -39,6 +41,28 @@ Middleware<AppState> _createCheckIfUserExistsMiddleware() {
             store.dispatch(NewUser());
           }
           store.dispatch(StopLoading());
+        });
+      }
+      catch (e) {
+        // throw the Firebase AuthException that we caught
+        throw new AuthException(e.code, e.message);
+      }
+    }
+    next(action);
+  };
+}
+
+Middleware<AppState> _createRegisterUserMiddleware() {
+  return (Store<AppState> store, action, NextDispatcher next) async {
+    if (action is RegisterUser) {
+      try {
+        store.dispatch(StartLoading());
+        User user = store.state.authState.user;
+        user = user.copyWith(
+          isRegistered: true
+        );
+        Firestore.instance.collection('users').add(user.toJson()).then((result) {
+          store.dispatch(UserRegistered());
         });
       }
       catch (e) {
@@ -109,7 +133,7 @@ Middleware<AppState> _createLogOutMiddleware() {
     try {
       await _auth.signOut();
       print('logging out...');
-      Keys.navigatorKey.currentState.pushReplacementNamed(Routes.mobileScreen);
+      Keys.navigatorKey.currentState.pushReplacementNamed(Routes.authScreen);
       store.dispatch(LogOutSuccessful());
     } catch (error) {
       print(error);

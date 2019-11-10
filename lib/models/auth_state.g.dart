@@ -18,5 +18,5 @@ AuthState _$AuthStateFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$AuthStateToJson(AuthState instance) => <String, dynamic>{
       'isAuthenticated': instance.isAuthenticated,
       'isNewUser': instance.isNewUser,
-      'user': instance.user?.toJson()
+      'user': instance.user
     };

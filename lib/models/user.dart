@@ -10,11 +10,20 @@ class User {
   final DateTime dob;
 
   User({
-    this.isRegistered,
+    this.isRegistered = false,
     this.mobile,
     this.name,
     this.dob
   });
+
+  User copyWith({bool isRegistered, String mobile, String name, DateTime dob}) {
+    return User(
+      isRegistered: isRegistered ?? this.isRegistered,
+      mobile: mobile ?? this.mobile,
+      name: name ?? this.name,
+      dob: dob ?? this.dob,
+    );
+  }
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

@@ -27,7 +27,7 @@ class AlreadyExists {
 class NewUser {}
 
 class UpdateUser {
-  final Map<String, String> keyValues;
+  final Map<String, dynamic> keyValues;
 
   UpdateUser({this.keyValues});
 
@@ -38,6 +38,8 @@ class UpdateUser {
 }
 
 class RegisterUser {}
+
+class UserRegistered {}
 
 class SendOTP {
   final String phone;

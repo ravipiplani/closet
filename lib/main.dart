@@ -9,6 +9,7 @@ import 'package:vastram/app.dart';
 import 'package:vastram/middleware/auth_middleware.dart';
 import 'package:vastram/models/app_state.dart';
 import 'package:vastram/models/auth_state.dart';
+import 'package:vastram/models/user.dart';
 import 'package:vastram/reducers/app_reducer.dart';
 
 void main() async {
@@ -25,7 +26,12 @@ void main() async {
     initialState = await persistor.load();
     initialState = initialState.copyWith(isLoading: false);
     if (!initialState.authState.isAuthenticated) {
-      initialState = initialState.copyWith(authState: initialState.authState.copyWith(isNewUser: false));
+      initialState = initialState.copyWith(
+        authState: initialState.authState.copyWith(
+          isNewUser: false,
+          user: User()
+        )
+      );
     }
   }
   catch (e) {
