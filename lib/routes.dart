@@ -4,6 +4,7 @@ class Routes {
   static final otpScreen = "OTP_SCREEN";
   static final onBoardingScreen = "ONBOARDING_SCREEN";
   static final homeScreen = "HOME_SCREEN";
+  static final cameraScreen = "CAMERA_SCREEN";
   
   static final newItemScreen = "NEW_ITEM_SCREEN";
 }

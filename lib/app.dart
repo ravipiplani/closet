@@ -1,3 +1,4 @@
+import 'package:vastram/components/camera.dart';
 import 'package:vastram/keys.dart';
 import 'package:vastram/models/app_state.dart';
 import 'package:vastram/routes.dart';
@@ -23,7 +24,7 @@ class AppRoot extends StatefulWidget {
 }
 
 class _AppRootState extends State<AppRoot> {
-  int primaryColor = 0xff1e3b65;
+  int primaryColor = 0xFF1e3b65;
   int accentColor = 0xFFEE4DB9;
 
   static FirebaseAnalytics analytics = FirebaseAnalytics();
@@ -36,6 +37,7 @@ class _AppRootState extends State<AppRoot> {
     indicatorColor: Color(primaryColor).withOpacity(0.6),
     accentColor: Color(accentColor),
     scaffoldBackgroundColor: Colors.white,
+    canvasColor: Colors.white,
     // Define the default font family.
     fontFamily: 'Avenir',
 
@@ -96,6 +98,7 @@ class _AppRootState extends State<AppRoot> {
           Routes.otpScreen: (BuildContext context) => Otp(),
           Routes.onBoardingScreen: (BuildContext context) => Onboarding(),
           Routes.homeScreen: (BuildContext context) => Home(),
+          Routes.cameraScreen: (BuildContext context) => Camera(),
           Routes.newItemScreen: (BuildContext context) => NewItem(),
         },
       ),

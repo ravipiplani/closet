@@ -1,21 +1,28 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/material.dart';
+
 import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 
+// A screen that allows users to take a picture using a given camera.
 class Camera extends StatefulWidget {
+  final Function(String) callback;
+
+  const Camera({
+    Key key,
+    this.callback
+  }) : super(key: key);
+
   @override
-  _CameraState createState() => _CameraState();
+  CameraState createState() => CameraState();
 }
 
-class _CameraState extends State<Camera> {
-  List<CameraDescription> cameras;
-  CameraController controller;
-  bool isReady = false;
-  bool showCamera = true;
-  String imagePath;
-  //Inputs
+class CameraState extends State<Camera> {
+  CameraDescription camera;
+  CameraController _controller;
+  Future<void> _initializeControllerFuture;
 
   @override
   void initState() {
@@ -25,216 +32,99 @@ class _CameraState extends State<Camera> {
 
   Future<void> setupCameras() async {
     try {
-      cameras = await availableCameras();
-      controller = CameraController(cameras[0], ResolutionPreset.medium, );
-      await controller.initialize();
-    } on CameraException catch (_) {
+      final cameras = await availableCameras();
       setState(() {
-        isReady = false;
+        _controller = CameraController(
+          cameras[0],
+          ResolutionPreset.medium,
+        );
+        _initializeControllerFuture = _controller.initialize();
       });
+    } on CameraException catch (_) {
     }
-    setState(() {
-      isReady = true;
-    });
   }
 
+  @override
+  void dispose() {
+    // Dispose of the controller when the widget is disposed.
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      // mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        Center(
-          child: showCamera
-            ? Stack(
-              children: <Widget>[
-                Container(
-                  // width: size.width,
-                  height: size.height - 80,
-                  color: Colors.transparent,
-                  child: cameraPreviewWidget()
-                ),
-                Positioned(
-                  bottom: 20,
-                  left: 0,
-                  right: 0,
-                  child: captureControlRowWidget(),
-                )
-              ],
-            )
-            : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                imagePreviewWidget(),
-                editCaptureControlRowWidget()
-              ],
-            ),
-        )
-      ],
-    );
-  }
+    return Scaffold(
+      body: FutureBuilder<void>(
+        future: _initializeControllerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            // If the Future is complete, display the preview.
+            return Container(
+              child: AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: CameraPreview(_controller)
+              )
+            );
+          } else {
+            // Otherwise, display a loading indicator.
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.camera_alt),
+        // Provide an onPressed callback.
+        onPressed: () async {
+          // Take the Picture in a try / catch block. If anything goes wrong,
+          // catch the error.
+          try {
+            // Ensure that the camera is initialized.
+            await _initializeControllerFuture;
 
-  Widget cameraPreviewWidget() {
-    final size = MediaQuery.of(context).size;
-    final deviceRatio = size.width / size.height;
-    if (!isReady || !controller.value.isInitialized) {
-      return Container();
-    }
-    return Transform.scale(
-      scale: controller.value.aspectRatio / deviceRatio,
-      child: AspectRatio(
-        aspectRatio: controller.value.aspectRatio,
-        child: CameraPreview(controller)
-      )
-    );
-  }
+            // Construct the path where the image should be saved using the
+            // pattern package.
+            final path = join(
+              // Store the picture in the temp directory.
+              // Find the temp directory using the `path_provider` plugin.
+              (await getTemporaryDirectory()).path,
+              '${DateTime.now()}.png',
+            );
 
-  Widget imagePreviewWidget() {
-    return Container(
-      height: 290,
-      color: Colors.transparent,
-      child: FittedBox(
-        fit: BoxFit.cover,
-        child: imagePath == null
-          ? null
-          : Image.file(File(imagePath)),
-      )
-    );
-  }
+            // Attempt to take a picture and log where it's been saved.
+            await _controller.takePicture(path);
 
-  Widget captureControlRowWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        IconButton(
-          icon: Icon(Icons.photo_camera, size: 40,),
-          color: Theme.of(context).accentColor,
-          onPressed: controller != null && controller.value.isInitialized
-              ? onTakePictureButtonPressed
-              : null,
-        ),
-      ],
-    );
-  }
+            widget.callback(path);
 
-  void onTakePictureButtonPressed() {
-    takePicture().then((String filePath) {
-      if (mounted) {
-        setState(() {
-          imagePath = filePath;
-          showCamera = false;
-        });
-      }
-    });
-  }
-
-  Future<String> takePicture() async {
-    if (!controller.value.isInitialized) {
-      return null;
-    }
-    final Directory extDir = await getApplicationDocumentsDirectory();
-    final String dirPath = '${extDir.path}/Pictures/flutter_test';
-    await Directory(dirPath).create(recursive: true);
-    final String filePath = '$dirPath/${DateTime.now().millisecondsSinceEpoch}.jpg';
-
-    if (controller.value.isTakingPicture) {
-      return null;
-    }
-
-    try {
-      await controller.takePicture(filePath);
-    } on CameraException catch (e) {
-      print(e);
-      return null;
-    }
-    return filePath;
-  }
-
-  Widget editCaptureControlRowWidget() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 5),
-      child: Align(
-        alignment: Alignment.topCenter,
-        child: IconButton(
-          icon: const Icon(Icons.camera_alt),
-          color: Theme.of(context).accentColor,
-          onPressed: () => setState(() {
-                showCamera = true;
-              }),
-        ),
+            // // If the picture was taken, display it on a new screen.
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => DisplayPictureScreen(imagePath: path),
+            //   ),
+            // );
+          } catch (e) {
+            // If an error occurs, log the error to the console.
+            print(e);
+          }
+        },
       ),
     );
   }
+}
 
-  Widget cameraOptionsWidget() {
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          showCamera ? cameraTogglesRowWidget() : Container(),
-        ],
-      ),
+// A widget that displays the picture taken by the user.
+class DisplayPictureScreen extends StatelessWidget {
+  final String imagePath;
+
+  const DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Display the Picture')),
+      // The image is stored as a file on the device. Use the `Image.file`
+      // constructor with the given path to display the image.
+      body: Image.file(File(imagePath)),
     );
-  }
-
-  Widget cameraTogglesRowWidget() {
-    final List<Widget> toggles = <Widget>[];
-    if (cameras != null) {
-      if (cameras.isEmpty) {
-        return const Text('No camera found');
-      } else {
-        for (CameraDescription cameraDescription in cameras) {
-          toggles.add(
-            SizedBox(
-              width: 90.0,
-              child: RadioListTile<CameraDescription>(
-                title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
-                groupValue: controller?.description,
-                value: cameraDescription,
-                onChanged: controller != null ? onNewCameraSelected : null,
-              ),
-            ),
-          );
-        }
-      }
-    }
-
-    return Row(children: toggles);
-  }
-
-  IconData getCameraLensIcon(CameraLensDirection cld) {
-    if (cld == CameraLensDirection.front) {
-      return Icons.camera_front;
-    }
-    else {
-      return Icons.camera_rear;
-    }
-  }
-
-  void onNewCameraSelected(CameraDescription cameraDescription) async {
-    if (controller != null) {
-      await controller.dispose();
-    }
-    controller = CameraController(cameraDescription, ResolutionPreset.high);
-
-    controller.addListener(() {
-      if (mounted) setState(() {});
-      if (controller.value.hasError) {
-        print('Camera error ${controller.value.errorDescription}');
-      }
-    });
-
-    try {
-      await controller.initialize();
-    } on CameraException catch (e) {
-      print('Camera error $e');
-    }
-
-    if (mounted) {
-      setState(() {});
-    }
   }
 }

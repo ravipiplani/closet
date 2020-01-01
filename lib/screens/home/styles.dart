@@ -1,7 +1,7 @@
-import 'package:badges/badges.dart';
 import 'package:vastram/components/decorated_container.dart';
 import 'package:flutter/material.dart';
 import 'package:vastram/routes.dart';
+import 'package:vastram/utils/constants.dart';
 
 class Styles extends StatefulWidget {
   Styles({Key key}) : super(key: key);
@@ -10,40 +10,10 @@ class Styles extends StatefulWidget {
 }
 
 class _StylesState extends State<Styles> {
-  List<Map> _categories = [
-    {
-      "name": "top",
-      "image": "item-type-top.png"
-    },
-    {
-      "name": "bottom",
-      "image": "item-type-bottom.png"
-    },
-    {
-      "name": "footwear",
-      "image": "item-type-footwear.png"
-    },
-    {
-      "name": "accessory",
-      "image": "item-type-accessory.png"
-    },
-    {
-      "name": "lingerie",
-      "image": "item-type-lingerie.png"
-    }
-  ];
+  List<Map> _categories = ITEM_CATEGORIES;
   int selectedCategoryIndex = 0;
 
-  List<Color> colors = [
-    Colors.red,
-    Colors.blue,
-    Colors.green,
-    Colors.yellow,
-    Colors.orange,
-    Colors.pink,
-    Colors.black,
-    Colors.white,
-  ];
+  List<Color> colors = ITEM_COLORS;
   int selectedChip = 0;
 
   @override

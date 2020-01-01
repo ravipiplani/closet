@@ -11,8 +11,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
       isRegistered: json['isRegistered'] as bool,
       mobile: json['mobile'] as String,
       name: json['name'] as String,
-      dob: json['dob'] == null ? null : DateTime.parse(json['dob'] as String)
-    );
+      dob: json['dob'] == null ? null : DateTime.parse(json['dob'] as String));
 }
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
